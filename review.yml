@@ -1,0 +1,76 @@
+aid: nscale
+name: Nscale
+review:
+  question: Does Nscale expose a documented public WebSocket API?
+  answer: false
+  date: '2026-06-21'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: true
+  asyncapiScopeNote: |
+    Per updated API Evangelist scope, HTTP Server-Sent Events (SSE) is in-scope
+    for AsyncAPI modeling. An AsyncAPI 2.6 document was created at
+    asyncapi/nscale-asyncapi.yml describing the chat completion SSE stream
+    (POST /v1/chat/completions with stream=true). No WebSocket surface was
+    modeled because none is documented.
+findings:
+  summary: |
+    Nscale does not publish a documented public WebSocket API. The Nscale
+    Serverless Inference platform is OpenAI-compatible and exposes only REST
+    (HTTPS) endpoints under https://inference.api.nscale.com/v1. Streaming for
+    chat completions is delivered as HTTP Server-Sent Events (SSE) via the
+    `stream: true` parameter on the REST endpoint; SSE is a one-way HTTP
+    streaming transport and is not WebSocket. The platform/console API for GPU
+    compute, instances, networks, and storage under https://api.nscale.com is
+    likewise REST. No realtime, bidirectional, or audio streaming WebSocket
+    (ws:// or wss://) endpoint is documented as of the review date.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://inference.api.nscale.com/v1
+      documented: true
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.nscale.com
+      documented: true
+      note: Platform API for GPU compute, instances, networks, storage, organizations.
+    - protocol: SSE
+      scheme: https
+      note: Server-Sent Events delivered over the same REST chat completions endpoint when stream=true. Not WebSocket.
+      documented: true
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented in Nscale's inference API reference or platform docs as of the review date.
+  endpointsConfirmedRest:
+    - POST https://inference.api.nscale.com/v1/chat/completions
+    - POST https://inference.api.nscale.com/v1/completions
+    - POST https://inference.api.nscale.com/v1/embeddings
+    - POST https://inference.api.nscale.com/v1/images/generations
+    - GET  https://inference.api.nscale.com/v1/models
+    - GET  https://inference.api.nscale.com/v1/models/{model}
+    - GET  https://api.nscale.com/organizations/{organization_id}/endpoints
+sources:
+  - url: https://docs.nscale.com
+    type: Documentation
+    note: Inference overview references REST base URL https://inference.api.nscale.com/v1; no WebSocket mentioned.
+  - url: https://docs.nscale.com/api-reference
+    type: APIReference
+    note: All documented serverless inference endpoints are HTTPS REST; chat completions support SSE streaming via stream=true.
+  - url: https://www.nscale.com/product/serverless
+    type: Documentation
+    note: Confirms OpenAI API and SDK compatibility for the serverless inference surface.
+  - url: https://docs.nscale.com/llms.txt
+    type: Documentation
+    note: Index lists inference endpoints plus platform compute/instance/network/storage REST APIs; no WebSocket surface.
+actions:
+  asyncapiPath: asyncapi/nscale-asyncapi.yml
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists. Under the current scope that allows
+    SSE in AsyncAPI, an AsyncAPI 2.6 document was authored for the chat
+    completion SSE stream, with HTTP+SSE transport documented explicitly
+    throughout the spec (server protocol, channel bindings,
+    info.x-transport-notes) so SSE is never misrepresented as WebSocket.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

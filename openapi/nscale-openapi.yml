@@ -1,0 +1,498 @@
+openapi: 3.0.1
+info:
+  title: Nscale Serverless Inference API
+  description: >-
+    OpenAI-compatible serverless inference API for Nscale. Provides chat
+    completions, text completions, embeddings, image generation, and model
+    discovery against open models (Llama, Qwen, DeepSeek, GPT OSS, Mistral,
+    Flux) served on Nscale GPU infrastructure. Authenticate with a Bearer API
+    key issued from the Nscale console.
+  termsOfService: https://www.nscale.com/legal/terms-of-service
+  contact:
+    name: Nscale Support
+    url: https://docs.nscale.com
+  version: '1.0'
+servers:
+  - url: https://inference.api.nscale.com/v1
+    description: Serverless Inference API
+security:
+  - bearerAuth: []
+tags:
+  - name: Chat
+    description: OpenAI-compatible chat completions.
+  - name: Completions
+    description: OpenAI-compatible legacy text completions.
+  - name: Embeddings
+    description: Vector embeddings of text input.
+  - name: Images
+    description: Text-to-image generation.
+  - name: Models
+    description: Model catalog discovery.
+paths:
+  /chat/completions:
+    post:
+      operationId: createChatCompletion
+      tags:
+        - Chat
+      summary: Create a chat completion
+      description: >-
+        Generates a chat completion response for the provided model and chat
+        history. Supports streaming via Server-Sent Events when stream is true.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatCompletionRequest'
+      responses:
+        '200':
+          description: A chat completion (or an SSE stream when stream=true).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatCompletionResponse'
+            text/event-stream:
+              schema:
+                type: string
+                description: Server-Sent Events stream of ChatCompletionChunk objects.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /completions:
+    post:
+      operationId: createCompletion
+      tags:
+        - Completions
+      summary: Create a completion
+      description: Generates a completion response for the provided model and prompt.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompletionRequest'
+      responses:
+        '200':
+          description: A text completion.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompletionResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /embeddings:
+    post:
+      operationId: createEmbedding
+      tags:
+        - Embeddings
+      summary: Create embeddings
+      description: >-
+        Returns a vector representation of a given input that can be consumed by
+        machine learning models and retrieval systems.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmbeddingRequest'
+      responses:
+        '200':
+          description: A list of embedding vectors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmbeddingResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /images/generations:
+    post:
+      operationId: createImage
+      tags:
+        - Images
+      summary: Create an image
+      description: Creates one or more images based on the provided text prompt.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageGenerationRequest'
+      responses:
+        '200':
+          description: The generated image(s).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerationResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /models:
+    get:
+      operationId: listModels
+      tags:
+        - Models
+      summary: List models
+      description: >-
+        Returns a list of serverless models available for inference, including
+        identifiers and metadata such as context length and pricing.
+      responses:
+        '200':
+          description: A list of available models.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /models/{model}:
+    get:
+      operationId: retrieveModel
+      tags:
+        - Models
+      summary: Retrieve a model
+      description: Returns metadata for a single model by identifier.
+      parameters:
+        - name: model
+          in: path
+          required: true
+          description: The model identifier.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The requested model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Model not found.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        Nscale API key issued from the console, sent as
+        `Authorization: Bearer $NSCALE_API_KEY`.
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: Too many requests; back off and retry.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    ChatCompletionRequest:
+      type: object
+      required:
+        - model
+        - messages
+      properties:
+        model:
+          type: string
+          description: Model identifier, e.g. meta-llama/Llama-4-Scout-17B-16E-Instruct.
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChatMessage'
+        temperature:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 2
+          default: 1
+        top_p:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+          default: 1
+        max_tokens:
+          type: integer
+          description: Maximum number of tokens to generate.
+        stream:
+          type: boolean
+          default: false
+          description: If true, partial deltas are sent as Server-Sent Events.
+        stop:
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+        frequency_penalty:
+          type: number
+          format: float
+          minimum: -2
+          maximum: 2
+          default: 0
+        presence_penalty:
+          type: number
+          format: float
+          minimum: -2
+          maximum: 2
+          default: 0
+        tools:
+          type: array
+          items:
+            type: object
+        tool_choice:
+          oneOf:
+            - type: string
+            - type: object
+    ChatMessage:
+      type: object
+      required:
+        - role
+        - content
+      properties:
+        role:
+          type: string
+          enum:
+            - system
+            - user
+            - assistant
+            - tool
+        content:
+          description: Text content or an array of multimodal content parts.
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                type: object
+        name:
+          type: string
+    ChatCompletionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          example: chat.completion
+        created:
+          type: integer
+        model:
+          type: string
+        choices:
+          type: array
+          items:
+            type: object
+            properties:
+              index:
+                type: integer
+              message:
+                $ref: '#/components/schemas/ChatMessage'
+              finish_reason:
+                type: string
+        usage:
+          $ref: '#/components/schemas/Usage'
+    CompletionRequest:
+      type: object
+      required:
+        - model
+        - prompt
+      properties:
+        model:
+          type: string
+        prompt:
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+        max_tokens:
+          type: integer
+        temperature:
+          type: number
+          format: float
+        top_p:
+          type: number
+          format: float
+        stream:
+          type: boolean
+          default: false
+        stop:
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+    CompletionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          example: text_completion
+        created:
+          type: integer
+        model:
+          type: string
+        choices:
+          type: array
+          items:
+            type: object
+            properties:
+              index:
+                type: integer
+              text:
+                type: string
+              finish_reason:
+                type: string
+        usage:
+          $ref: '#/components/schemas/Usage'
+    EmbeddingRequest:
+      type: object
+      required:
+        - model
+        - input
+      properties:
+        model:
+          type: string
+          description: Embedding model identifier, e.g. Qwen/Qwen3-Embedding-8B.
+        input:
+          description: Text or array of text to embed.
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+        encoding_format:
+          type: string
+          enum:
+            - float
+            - base64
+          default: float
+    EmbeddingResponse:
+      type: object
+      properties:
+        object:
+          type: string
+          example: list
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              object:
+                type: string
+                example: embedding
+              index:
+                type: integer
+              embedding:
+                type: array
+                items:
+                  type: number
+                  format: float
+        model:
+          type: string
+        usage:
+          $ref: '#/components/schemas/Usage'
+    ImageGenerationRequest:
+      type: object
+      required:
+        - model
+        - prompt
+      properties:
+        model:
+          type: string
+          description: Image model identifier, e.g. BlackForestLabs/FLUX.1-schnell.
+        prompt:
+          type: string
+        n:
+          type: integer
+          default: 1
+          description: Number of images to generate.
+        size:
+          type: string
+          description: Output dimensions, e.g. 1024x1024.
+        response_format:
+          type: string
+          enum:
+            - url
+            - b64_json
+          default: b64_json
+        num_inference_steps:
+          type: integer
+          description: Number of diffusion steps (affects per-megapixel cost).
+    ImageGenerationResponse:
+      type: object
+      properties:
+        created:
+          type: integer
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+              b64_json:
+                type: string
+    ModelList:
+      type: object
+      properties:
+        object:
+          type: string
+          example: list
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Model'
+    Model:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          example: model
+        created:
+          type: integer
+        owned_by:
+          type: string
+        context_length:
+          type: integer
+        pricing:
+          type: object
+          description: Per-1M-token pricing metadata where exposed.
+          additionalProperties: true
+    Usage:
+      type: object
+      properties:
+        prompt_tokens:
+          type: integer
+        completion_tokens:
+          type: integer
+        total_tokens:
+          type: integer
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+            code:
+              type: string

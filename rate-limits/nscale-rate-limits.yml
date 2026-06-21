@@ -1,0 +1,61 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Nscale
+providerId: nscale
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- AI
+- GPU
+- Inference
+- Serverless
+- Cloud Compute
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  Nscale enforces per-account rate limits on serverless inference, typically
+  expressed as requests per minute (RPM) and tokens per minute (TPM) per model,
+  with limits scaling by account tier and usage. GPU compute is governed by
+  organization-level capacity quotas rather than request-rate limits. Specific
+  per-model values are not reconciled in this artifact.
+notes: >-
+  Verify per-model RPM/TPM and compute quotas in the Nscale console on
+  reconciliation; limits change as accounts move between free, paid, and
+  enterprise tiers.
+sources:
+- https://docs.nscale.com
+- https://www.nscale.com/product/serverless
+responseCodes:
+  throttled: 429
+limits:
+- name: Requests Per Minute (RPM)
+  scope: account
+  metric: requests
+  limit: see provider documentation
+  notes: Per-model RPM on serverless inference, varies by tier and model.
+- name: Tokens Per Minute (TPM)
+  scope: account
+  metric: tokens
+  limit: see provider documentation
+  notes: Per-model TPM on serverless inference, varies by tier and model.
+- name: Concurrent Requests
+  scope: account
+  metric: concurrency
+  limit: see provider documentation
+  notes: Maximum in-flight inference requests per account/key.
+- name: GPU Compute Quota
+  scope: organization
+  metric: gpu_capacity
+  limit: see provider documentation
+  notes: Organization-level GPU/instance capacity quota for compute provisioning, not a request rate.
+policies:
+- name: Tiered Limits
+  description: Limits raise as accounts move from free to paid usage and via Enterprise agreements.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter and honor Retry-After on 429 responses.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

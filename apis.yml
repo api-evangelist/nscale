@@ -1,0 +1,160 @@
+aid: nscale
+url: https://raw.githubusercontent.com/api-evangelist/nscale/refs/heads/main/apis.yml
+name: Nscale
+kind: company
+description: Nscale is an AI/GPU cloud that pairs serverless, OpenAI-compatible inference
+  with on-demand GPU compute. The Serverless Inference API serves open models (Llama,
+  Qwen, DeepSeek, GPT OSS, Mistral, Flux) at https://inference.api.nscale.com/v1 with
+  pay-per-token billing, while the platform API provisions GPU clusters, compute instances,
+  networks, and storage.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- AI
+- GPU
+- Inference
+- Serverless
+- Cloud Compute
+created: '2026-06-21'
+modified: '2026-06-21'
+specificationVersion: '0.19'
+apis:
+- aid: nscale:nscale-serverless-chat-completions-api
+  name: Nscale Serverless Chat Completions API
+  tags:
+  - Chat
+  - Completions
+  - LLM
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.nscale.com/docs/inference/serverless-models/overview
+  baseURL: https://inference.api.nscale.com/v1
+  properties:
+  - url: https://docs.nscale.com/docs/inference/serverless-models/overview
+    type: Documentation
+  - url: https://docs.nscale.com/api-reference
+    type: APIReference
+  - url: openapi/nscale-openapi.yml
+    type: OpenAPI
+  - url: asyncapi/nscale-asyncapi.yml
+    type: AsyncAPI
+  - url: collections/nscale.postman_collection.json
+    type: Postman
+  description: OpenAI-compatible chat completions across Llama, Qwen, DeepSeek, GPT
+    OSS, and Mistral models, with streaming (SSE), tool use, and multimodal vision
+    inputs, served from Nscale serverless inference.
+- aid: nscale:nscale-serverless-completions-api
+  name: Nscale Serverless Completions API
+  tags:
+  - Completions
+  - Text Generation
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.nscale.com/api-reference
+  baseURL: https://inference.api.nscale.com/v1
+  properties:
+  - url: https://docs.nscale.com/docs/inference/serverless-models/overview
+    type: Documentation
+  - url: https://docs.nscale.com/api-reference
+    type: APIReference
+  - url: openapi/nscale-openapi.yml
+    type: OpenAPI
+  - url: collections/nscale.postman_collection.json
+    type: Postman
+  description: OpenAI-compatible legacy text completions endpoint that generates a
+    continuation for a supplied prompt against a selected serverless model.
+- aid: nscale:nscale-serverless-embeddings-api
+  name: Nscale Serverless Embeddings API
+  tags:
+  - Embeddings
+  - Vectors
+  - Semantic Search
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.nscale.com/api-reference
+  baseURL: https://inference.api.nscale.com/v1
+  properties:
+  - url: https://docs.nscale.com/docs/inference/serverless-models/overview
+    type: Documentation
+  - url: https://docs.nscale.com/api-reference
+    type: APIReference
+  - url: openapi/nscale-openapi.yml
+    type: OpenAPI
+  - url: collections/nscale.postman_collection.json
+    type: Postman
+  description: OpenAI-compatible embeddings endpoint returning vector representations
+    of text for retrieval, clustering, and semantic search, served by models such
+    as Qwen3 Embedding.
+- aid: nscale:nscale-serverless-image-generation-api
+  name: Nscale Serverless Image Generation API
+  tags:
+  - Image Generation
+  - Text to Image
+  - Diffusion
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.nscale.com/api-reference
+  baseURL: https://inference.api.nscale.com/v1
+  properties:
+  - url: https://docs.nscale.com/docs/inference/serverless-models/overview
+    type: Documentation
+  - url: https://docs.nscale.com/api-reference
+    type: APIReference
+  - url: openapi/nscale-openapi.yml
+    type: OpenAPI
+  - url: collections/nscale.postman_collection.json
+    type: Postman
+  description: OpenAI-compatible text-to-image endpoint creating images from prompts
+    using diffusion models such as Flux.1 [schnell], billed per megapixel.
+- aid: nscale:nscale-models-api
+  name: Nscale Models API
+  tags:
+  - Models
+  - Catalog
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.nscale.com/api-reference
+  baseURL: https://inference.api.nscale.com/v1
+  properties:
+  - url: https://docs.nscale.com/docs/inference/serverless-models/overview
+    type: Documentation
+  - url: https://docs.nscale.com/api-reference
+    type: APIReference
+  - url: openapi/nscale-openapi.yml
+    type: OpenAPI
+  - url: collections/nscale.postman_collection.json
+    type: Postman
+  description: Lists serverless models available for inference with identifiers, context
+    length, and per-token pricing metadata via the OpenAI-compatible models endpoint.
+- aid: nscale:nscale-gpu-compute-api
+  name: Nscale GPU Compute and Clusters API
+  tags:
+  - GPU
+  - Compute
+  - Clusters
+  - Infrastructure
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.nscale.com/api-reference
+  baseURL: https://api.nscale.com
+  properties:
+  - url: https://docs.nscale.com/docs/compute/overview
+    type: Documentation
+  - url: https://docs.nscale.com/api-reference
+    type: APIReference
+  - url: openapi/nscale-openapi.yml
+    type: OpenAPI
+  - url: collections/nscale.postman_collection.json
+    type: Postman
+  description: Platform API for provisioning and managing GPU compute instances, networks,
+    security groups, object storage, organizations, and projects on the Nscale AI
+    cloud.
+common:
+- type: LinkedIn
+  url: https://www.linkedin.com/company/nscale
+- type: Website
+  url: https://www.nscale.com
+- type: Documentation
+  url: https://docs.nscale.com
+- type: Plans
+  url: plans/nscale-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/nscale-rate-limits.yml
+- type: FinOps
+  url: finops/nscale-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,160 @@
+{
+  "info": {
+    "name": "Nscale Serverless Inference API",
+    "description": "OpenAI-compatible serverless inference API for Nscale: chat completions, completions, embeddings, image generation, and model discovery at https://inference.api.nscale.com/v1.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://inference.api.nscale.com/v1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Chat",
+      "item": [
+        {
+          "name": "Create a chat completion",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/chat/completions",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "completions"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"meta-llama/Llama-4-Scout-17B-16E-Instruct\",\n  \"messages\": [\n    { \"role\": \"user\", \"content\": \"Hello\" }\n  ],\n  \"temperature\": 1,\n  \"max_tokens\": 256,\n  \"stream\": false\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "Generates a chat completion response for the provided model and chat history. Set stream=true for an SSE token stream."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Completions",
+      "item": [
+        {
+          "name": "Create a completion",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/completions",
+              "host": ["{{baseUrl}}"],
+              "path": ["completions"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"meta-llama/Llama-4-Scout-17B-16E-Instruct\",\n  \"prompt\": \"Once upon a time\",\n  \"max_tokens\": 128\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "Generates a completion response for the provided model and prompt."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Embeddings",
+      "item": [
+        {
+          "name": "Create embeddings",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/embeddings",
+              "host": ["{{baseUrl}}"],
+              "path": ["embeddings"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"Qwen/Qwen3-Embedding-8B\",\n  \"input\": \"The quick brown fox\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "Returns a vector representation of a given input."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Images",
+      "item": [
+        {
+          "name": "Create an image",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/images/generations",
+              "host": ["{{baseUrl}}"],
+              "path": ["images", "generations"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"BlackForestLabs/FLUX.1-schnell\",\n  \"prompt\": \"A serene mountain lake at sunrise\",\n  \"n\": 1,\n  \"size\": \"1024x1024\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "Creates an image based on the provided text prompt."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Models",
+      "item": [
+        {
+          "name": "List models",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/models",
+              "host": ["{{baseUrl}}"],
+              "path": ["models"]
+            },
+            "description": "Returns a list of serverless models available for inference."
+          }
+        },
+        {
+          "name": "Retrieve a model",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/models/:model",
+              "host": ["{{baseUrl}}"],
+              "path": ["models", ":model"],
+              "variable": [
+                { "key": "model", "value": "meta-llama/Llama-4-Scout-17B-16E-Instruct" }
+              ]
+            },
+            "description": "Returns metadata for a single model by identifier."
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nscale Serverless Inference API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Chat",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a chat completion",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://inference.api.nscale.com/v1/chat/completions",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"model\": \"meta-llama/Llama-4-Scout-17B-16E-Instruct\",\n  \"messages\": [{ \"role\": \"user\", \"content\": \"Hello\" }],\n  \"stream\": false\n}"
+            }
+          },
+          "docs": "Generates a chat completion response for the provided model and chat history. Set stream=true for an SSE token stream."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Completions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a completion",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://inference.api.nscale.com/v1/completions",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"model\": \"meta-llama/Llama-4-Scout-17B-16E-Instruct\",\n  \"prompt\": \"Once upon a time\",\n  \"max_tokens\": 128\n}"
+            }
+          },
+          "docs": "Generates a completion response for the provided model and prompt."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Embeddings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create embeddings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://inference.api.nscale.com/v1/embeddings",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"model\": \"Qwen/Qwen3-Embedding-8B\",\n  \"input\": \"The quick brown fox\"\n}"
+            }
+          },
+          "docs": "Returns a vector representation of a given input."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Images",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create an image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://inference.api.nscale.com/v1/images/generations",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"model\": \"BlackForestLabs/FLUX.1-schnell\",\n  \"prompt\": \"A serene mountain lake at sunrise\",\n  \"n\": 1,\n  \"size\": \"1024x1024\"\n}"
+            }
+          },
+          "docs": "Creates an image based on the provided text prompt."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Models",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://inference.api.nscale.com/v1/models"
+          },
+          "docs": "Returns a list of serverless models available for inference."
+        },
+        {
+          "info": {
+            "name": "Retrieve a model",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://inference.api.nscale.com/v1/models/{model}"
+          },
+          "docs": "Returns metadata for a single model by identifier."
+        }
+      ]
+    }
+  ]
+}

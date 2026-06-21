@@ -1,0 +1,131 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Nscale
+providerId: nscale
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- AI
+- GPU
+- Inference
+- Serverless
+- Cloud Compute
+- Plans
+description: >-
+  Nscale uses pay-as-you-go pricing. Serverless inference text models are
+  billed per 1M tokens (input and output) and image models per megapixel based
+  on resolution and diffusion steps. GPU compute (clusters, nodes, instances)
+  is billed per GPU-hour, with reserved and enterprise commitments available
+  via sales. New accounts receive a small free inference credit.
+notes: >-
+  Representative serverless rates are published on the Nscale pricing and
+  serverless product pages; per-model rates and per-GPU-hour figures change
+  frequently and were not all individually confirmed (reconciled false). Verify
+  against nscale.com/pricing and the console at reconciliation.
+sources:
+- https://www.nscale.com/pricing
+- https://www.nscale.com/product/serverless
+- https://www.nscale.com/product/gpu-nodes
+- https://docs.nscale.com
+plans:
+- id: nscale-serverless-inference
+  name: Serverless Inference (Pay-as-you-go)
+  type: usage
+  description: >-
+    Token- and megapixel-metered usage across the OpenAI-compatible serverless
+    inference APIs with no monthly minimum.
+  entries:
+  - label: Text Models (Chat / Completions)
+    name: text_tokens
+    type: usage
+    metric: tokens
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1000000
+    price: from ~$0.01 input / ~$0.03 output per 1M (varies by model)
+    userMultiplied: false
+  - label: Large Text Models (e.g. 70B+ / DeepSeek)
+    name: large_text_tokens
+    type: usage
+    metric: tokens
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1000000
+    price: up to ~$0.20 input / ~$0.60 output per 1M (varies by model)
+    userMultiplied: false
+  - label: Embeddings
+    name: embeddings_tokens
+    type: usage
+    metric: tokens
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1000000
+    price: per 1M tokens, see pricing page
+    userMultiplied: false
+  - label: Image Generation (Flux family)
+    name: image_megapixels
+    type: usage
+    metric: megapixels
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: from ~$0.0013 per megapixel (@4 steps), scales with steps and size
+    userMultiplied: false
+  elements:
+  - name: Chat Completions
+  - name: Completions
+  - name: Embeddings
+  - name: Image Generation
+  - name: Models
+- id: nscale-gpu-compute
+  name: GPU Compute and Clusters
+  type: usage
+  description: >-
+    On-demand GPU instances, nodes, and clusters billed per GPU-hour. Reserved
+    capacity and longer commitments are available at reduced rates.
+  entries:
+  - label: GPU Instance / Node
+    name: gpu_hours
+    type: usage
+    metric: gpu_hours
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: per GPU-hour, varies by accelerator (H100 / B200 / MI300X); see quote
+    userMultiplied: false
+  elements:
+  - name: Compute Instances
+  - name: GPU Clusters
+  - name: Object Storage
+  - name: Networks
+- id: nscale-enterprise
+  name: Enterprise
+  type: enterprise
+  description: >-
+    Reserved GPU capacity, dedicated clusters, private deployments, volume
+    commitments, and negotiated terms. Contact Nscale sales.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Reserved GPU Capacity
+  - name: Dedicated Clusters
+  - name: Private Deployments
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
