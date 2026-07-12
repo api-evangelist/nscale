@@ -143,6 +143,12 @@ apis:
     security groups, object storage, organizations, and projects on the Nscale AI
     cloud.
 common:
+- type: DomainSecurity
+  url: security/nscale-domain-security.yml
+- type: Authentication
+  url: authentication/nscale-authentication.yml
+- url: https://www.nscale.com/blog
+  type: Blog
 - type: LinkedIn
   url: https://www.linkedin.com/company/nscale
 - type: Website

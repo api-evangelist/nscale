@@ -1,0 +1,13 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/nscale-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: 'Nscale API key issued from the console, sent as `Authorization: Bearer $NSCALE_API_KEY`.'
+  sources:
+  - openapi/nscale-openapi.yml
