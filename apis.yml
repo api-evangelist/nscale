@@ -143,6 +143,8 @@ apis:
     security groups, object storage, organizations, and projects on the Nscale AI
     cloud.
 common:
+- type: AgenticAccess
+  url: agentic-access/nscale-agentic-access.yml
 - type: DomainSecurity
   url: security/nscale-domain-security.yml
 - type: Authentication
