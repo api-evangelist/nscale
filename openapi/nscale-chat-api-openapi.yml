@@ -1,0 +1,192 @@
+openapi: 3.0.1
+info:
+  title: Nscale Serverless Inference Chat API
+  description: OpenAI-compatible serverless inference API for Nscale. Provides chat completions, text completions, embeddings, image generation, and model discovery against open models (Llama, Qwen, DeepSeek, GPT OSS, Mistral, Flux) served on Nscale GPU infrastructure. Authenticate with a Bearer API key issued from the Nscale console.
+  termsOfService: https://www.nscale.com/legal/terms-of-service
+  contact:
+    name: Nscale Support
+    url: https://docs.nscale.com
+  version: '1.0'
+servers:
+- url: https://inference.api.nscale.com/v1
+  description: Serverless Inference API
+security:
+- bearerAuth: []
+tags:
+- name: Chat
+  description: OpenAI-compatible chat completions.
+paths:
+  /chat/completions:
+    post:
+      operationId: createChatCompletion
+      tags:
+      - Chat
+      summary: Create a chat completion
+      description: Generates a chat completion response for the provided model and chat history. Supports streaming via Server-Sent Events when stream is true.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatCompletionRequest'
+      responses:
+        '200':
+          description: A chat completion (or an SSE stream when stream=true).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatCompletionResponse'
+            text/event-stream:
+              schema:
+                type: string
+                description: Server-Sent Events stream of ChatCompletionChunk objects.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  schemas:
+    ChatCompletionRequest:
+      type: object
+      required:
+      - model
+      - messages
+      properties:
+        model:
+          type: string
+          description: Model identifier, e.g. meta-llama/Llama-4-Scout-17B-16E-Instruct.
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChatMessage'
+        temperature:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 2
+          default: 1
+        top_p:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+          default: 1
+        max_tokens:
+          type: integer
+          description: Maximum number of tokens to generate.
+        stream:
+          type: boolean
+          default: false
+          description: If true, partial deltas are sent as Server-Sent Events.
+        stop:
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        frequency_penalty:
+          type: number
+          format: float
+          minimum: -2
+          maximum: 2
+          default: 0
+        presence_penalty:
+          type: number
+          format: float
+          minimum: -2
+          maximum: 2
+          default: 0
+        tools:
+          type: array
+          items:
+            type: object
+        tool_choice:
+          oneOf:
+          - type: string
+          - type: object
+    Usage:
+      type: object
+      properties:
+        prompt_tokens:
+          type: integer
+        completion_tokens:
+          type: integer
+        total_tokens:
+          type: integer
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+            code:
+              type: string
+    ChatMessage:
+      type: object
+      required:
+      - role
+      - content
+      properties:
+        role:
+          type: string
+          enum:
+          - system
+          - user
+          - assistant
+          - tool
+        content:
+          description: Text content or an array of multimodal content parts.
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: object
+        name:
+          type: string
+    ChatCompletionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          example: chat.completion
+        created:
+          type: integer
+        model:
+          type: string
+        choices:
+          type: array
+          items:
+            type: object
+            properties:
+              index:
+                type: integer
+              message:
+                $ref: '#/components/schemas/ChatMessage'
+              finish_reason:
+                type: string
+        usage:
+          $ref: '#/components/schemas/Usage'
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: Too many requests; back off and retry.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Nscale API key issued from the console, sent as `Authorization: Bearer $NSCALE_API_KEY`.'

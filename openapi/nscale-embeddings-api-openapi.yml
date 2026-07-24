@@ -1,0 +1,130 @@
+openapi: 3.0.1
+info:
+  title: Nscale Serverless Inference Chat Embeddings API
+  description: OpenAI-compatible serverless inference API for Nscale. Provides chat completions, text completions, embeddings, image generation, and model discovery against open models (Llama, Qwen, DeepSeek, GPT OSS, Mistral, Flux) served on Nscale GPU infrastructure. Authenticate with a Bearer API key issued from the Nscale console.
+  termsOfService: https://www.nscale.com/legal/terms-of-service
+  contact:
+    name: Nscale Support
+    url: https://docs.nscale.com
+  version: '1.0'
+servers:
+- url: https://inference.api.nscale.com/v1
+  description: Serverless Inference API
+security:
+- bearerAuth: []
+tags:
+- name: Embeddings
+  description: Vector embeddings of text input.
+paths:
+  /embeddings:
+    post:
+      operationId: createEmbedding
+      tags:
+      - Embeddings
+      summary: Create embeddings
+      description: Returns a vector representation of a given input that can be consumed by machine learning models and retrieval systems.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmbeddingRequest'
+      responses:
+        '200':
+          description: A list of embedding vectors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmbeddingResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  schemas:
+    EmbeddingRequest:
+      type: object
+      required:
+      - model
+      - input
+      properties:
+        model:
+          type: string
+          description: Embedding model identifier, e.g. Qwen/Qwen3-Embedding-8B.
+        input:
+          description: Text or array of text to embed.
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        encoding_format:
+          type: string
+          enum:
+          - float
+          - base64
+          default: float
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+            code:
+              type: string
+    Usage:
+      type: object
+      properties:
+        prompt_tokens:
+          type: integer
+        completion_tokens:
+          type: integer
+        total_tokens:
+          type: integer
+    EmbeddingResponse:
+      type: object
+      properties:
+        object:
+          type: string
+          example: list
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              object:
+                type: string
+                example: embedding
+              index:
+                type: integer
+              embedding:
+                type: array
+                items:
+                  type: number
+                  format: float
+        model:
+          type: string
+        usage:
+          $ref: '#/components/schemas/Usage'
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: Too many requests; back off and retry.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Nscale API key issued from the console, sent as `Authorization: Bearer $NSCALE_API_KEY`.'

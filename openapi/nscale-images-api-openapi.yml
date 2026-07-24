@@ -1,0 +1,115 @@
+openapi: 3.0.1
+info:
+  title: Nscale Serverless Inference Chat Images API
+  description: OpenAI-compatible serverless inference API for Nscale. Provides chat completions, text completions, embeddings, image generation, and model discovery against open models (Llama, Qwen, DeepSeek, GPT OSS, Mistral, Flux) served on Nscale GPU infrastructure. Authenticate with a Bearer API key issued from the Nscale console.
+  termsOfService: https://www.nscale.com/legal/terms-of-service
+  contact:
+    name: Nscale Support
+    url: https://docs.nscale.com
+  version: '1.0'
+servers:
+- url: https://inference.api.nscale.com/v1
+  description: Serverless Inference API
+security:
+- bearerAuth: []
+tags:
+- name: Images
+  description: Text-to-image generation.
+paths:
+  /images/generations:
+    post:
+      operationId: createImage
+      tags:
+      - Images
+      summary: Create an image
+      description: Creates one or more images based on the provided text prompt.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageGenerationRequest'
+      responses:
+        '200':
+          description: The generated image(s).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerationResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  schemas:
+    ImageGenerationRequest:
+      type: object
+      required:
+      - model
+      - prompt
+      properties:
+        model:
+          type: string
+          description: Image model identifier, e.g. BlackForestLabs/FLUX.1-schnell.
+        prompt:
+          type: string
+        n:
+          type: integer
+          default: 1
+          description: Number of images to generate.
+        size:
+          type: string
+          description: Output dimensions, e.g. 1024x1024.
+        response_format:
+          type: string
+          enum:
+          - url
+          - b64_json
+          default: b64_json
+        num_inference_steps:
+          type: integer
+          description: Number of diffusion steps (affects per-megapixel cost).
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+            code:
+              type: string
+    ImageGenerationResponse:
+      type: object
+      properties:
+        created:
+          type: integer
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+              b64_json:
+                type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: Too many requests; back off and retry.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Nscale API key issued from the console, sent as `Authorization: Bearer $NSCALE_API_KEY`.'
