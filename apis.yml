@@ -7,7 +7,20 @@ description: Nscale is an AI/GPU cloud that pairs serverless, OpenAI-compatible 
   Qwen, DeepSeek, GPT OSS, Mistral, Flux) at https://inference.api.nscale.com/v1 with
   pay-per-token billing, while the platform API provisions GPU clusters, compute instances,
   networks, and storage.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: paid
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/nscale.png
 tags:
 - AI
 - GPU
@@ -18,130 +31,106 @@ created: '2026-06-21'
 modified: '2026-06-21'
 specificationVersion: '0.19'
 apis:
-- aid: nscale:nscale-serverless-chat-completions-api
-  name: Nscale Serverless Chat Completions API
-  tags:
-  - Chat
-  - Completions
-  - LLM
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+- aid: nscale:nscale-chat-api
+  name: Nscale Chat API
+  description: OpenAI-compatible chat completions.
   humanURL: https://docs.nscale.com/docs/inference/serverless-models/overview
   baseURL: https://inference.api.nscale.com/v1
+  tags:
+  - Chat
   properties:
-  - url: https://docs.nscale.com/docs/inference/serverless-models/overview
-    type: Documentation
-  - url: https://docs.nscale.com/api-reference
-    type: APIReference
-  - url: openapi/nscale-openapi.yml
-    type: OpenAPI
-  - url: asyncapi/nscale-asyncapi.yml
-    type: AsyncAPI
-  - url: collections/nscale.postman_collection.json
-    type: Postman
-  description: OpenAI-compatible chat completions across Llama, Qwen, DeepSeek, GPT
-    OSS, and Mistral models, with streaming (SSE), tool use, and multimodal vision
-    inputs, served from Nscale serverless inference.
-- aid: nscale:nscale-serverless-completions-api
-  name: Nscale Serverless Completions API
+  - type: OpenAPI
+    url: openapi/nscale-chat-api-openapi.yml
+  - type: Documentation
+    url: https://docs.nscale.com/docs/inference/serverless-models/overview
+  - type: APIReference
+    url: https://docs.nscale.com/api-reference
+  - type: AsyncAPI
+    url: asyncapi/nscale-asyncapi.yml
+  - type: Postman
+    url: collections/nscale.postman_collection.json
+  - type: Documentation
+    url: https://docs.nscale.com/docs/compute/overview
+- aid: nscale:nscale-completions-api
+  name: Nscale Completions API
+  description: OpenAI-compatible legacy text completions.
+  humanURL: https://docs.nscale.com/docs/inference/serverless-models/overview
+  baseURL: https://inference.api.nscale.com/v1
   tags:
   - Completions
-  - Text Generation
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.nscale.com/api-reference
-  baseURL: https://inference.api.nscale.com/v1
   properties:
-  - url: https://docs.nscale.com/docs/inference/serverless-models/overview
-    type: Documentation
-  - url: https://docs.nscale.com/api-reference
-    type: APIReference
-  - url: openapi/nscale-openapi.yml
-    type: OpenAPI
-  - url: collections/nscale.postman_collection.json
-    type: Postman
-  description: OpenAI-compatible legacy text completions endpoint that generates a
-    continuation for a supplied prompt against a selected serverless model.
-- aid: nscale:nscale-serverless-embeddings-api
-  name: Nscale Serverless Embeddings API
+  - type: OpenAPI
+    url: openapi/nscale-completions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.nscale.com/docs/inference/serverless-models/overview
+  - type: APIReference
+    url: https://docs.nscale.com/api-reference
+  - type: AsyncAPI
+    url: asyncapi/nscale-asyncapi.yml
+  - type: Postman
+    url: collections/nscale.postman_collection.json
+  - type: Documentation
+    url: https://docs.nscale.com/docs/compute/overview
+- aid: nscale:nscale-embeddings-api
+  name: Nscale Embeddings API
+  description: Vector embeddings of text input.
+  humanURL: https://docs.nscale.com/docs/inference/serverless-models/overview
+  baseURL: https://inference.api.nscale.com/v1
   tags:
   - Embeddings
-  - Vectors
-  - Semantic Search
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.nscale.com/api-reference
-  baseURL: https://inference.api.nscale.com/v1
   properties:
-  - url: https://docs.nscale.com/docs/inference/serverless-models/overview
-    type: Documentation
-  - url: https://docs.nscale.com/api-reference
-    type: APIReference
-  - url: openapi/nscale-openapi.yml
-    type: OpenAPI
-  - url: collections/nscale.postman_collection.json
-    type: Postman
-  description: OpenAI-compatible embeddings endpoint returning vector representations
-    of text for retrieval, clustering, and semantic search, served by models such
-    as Qwen3 Embedding.
-- aid: nscale:nscale-serverless-image-generation-api
-  name: Nscale Serverless Image Generation API
+  - type: OpenAPI
+    url: openapi/nscale-embeddings-api-openapi.yml
+  - type: Documentation
+    url: https://docs.nscale.com/docs/inference/serverless-models/overview
+  - type: APIReference
+    url: https://docs.nscale.com/api-reference
+  - type: AsyncAPI
+    url: asyncapi/nscale-asyncapi.yml
+  - type: Postman
+    url: collections/nscale.postman_collection.json
+  - type: Documentation
+    url: https://docs.nscale.com/docs/compute/overview
+- aid: nscale:nscale-images-api
+  name: Nscale Images API
+  description: Text-to-image generation.
+  humanURL: https://docs.nscale.com/docs/inference/serverless-models/overview
+  baseURL: https://inference.api.nscale.com/v1
   tags:
-  - Image Generation
-  - Text to Image
-  - Diffusion
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.nscale.com/api-reference
-  baseURL: https://inference.api.nscale.com/v1
+  - Images
   properties:
-  - url: https://docs.nscale.com/docs/inference/serverless-models/overview
-    type: Documentation
-  - url: https://docs.nscale.com/api-reference
-    type: APIReference
-  - url: openapi/nscale-openapi.yml
-    type: OpenAPI
-  - url: collections/nscale.postman_collection.json
-    type: Postman
-  description: OpenAI-compatible text-to-image endpoint creating images from prompts
-    using diffusion models such as Flux.1 [schnell], billed per megapixel.
+  - type: OpenAPI
+    url: openapi/nscale-images-api-openapi.yml
+  - type: Documentation
+    url: https://docs.nscale.com/docs/inference/serverless-models/overview
+  - type: APIReference
+    url: https://docs.nscale.com/api-reference
+  - type: AsyncAPI
+    url: asyncapi/nscale-asyncapi.yml
+  - type: Postman
+    url: collections/nscale.postman_collection.json
+  - type: Documentation
+    url: https://docs.nscale.com/docs/compute/overview
 - aid: nscale:nscale-models-api
   name: Nscale Models API
+  description: Model catalog discovery.
+  humanURL: https://docs.nscale.com/docs/inference/serverless-models/overview
+  baseURL: https://inference.api.nscale.com/v1
   tags:
   - Models
-  - Catalog
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.nscale.com/api-reference
-  baseURL: https://inference.api.nscale.com/v1
   properties:
-  - url: https://docs.nscale.com/docs/inference/serverless-models/overview
-    type: Documentation
-  - url: https://docs.nscale.com/api-reference
-    type: APIReference
-  - url: openapi/nscale-openapi.yml
-    type: OpenAPI
-  - url: collections/nscale.postman_collection.json
-    type: Postman
-  description: Lists serverless models available for inference with identifiers, context
-    length, and per-token pricing metadata via the OpenAI-compatible models endpoint.
-- aid: nscale:nscale-gpu-compute-api
-  name: Nscale GPU Compute and Clusters API
-  tags:
-  - GPU
-  - Compute
-  - Clusters
-  - Infrastructure
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.nscale.com/api-reference
-  baseURL: https://api.nscale.com
-  properties:
-  - url: https://docs.nscale.com/docs/compute/overview
-    type: Documentation
-  - url: https://docs.nscale.com/api-reference
-    type: APIReference
-  - url: openapi/nscale-openapi.yml
-    type: OpenAPI
-  - url: collections/nscale.postman_collection.json
-    type: Postman
-  description: Platform API for provisioning and managing GPU compute instances, networks,
-    security groups, object storage, organizations, and projects on the Nscale AI
-    cloud.
+  - type: OpenAPI
+    url: openapi/nscale-models-api-openapi.yml
+  - type: Documentation
+    url: https://docs.nscale.com/docs/inference/serverless-models/overview
+  - type: APIReference
+    url: https://docs.nscale.com/api-reference
+  - type: AsyncAPI
+    url: asyncapi/nscale-asyncapi.yml
+  - type: Postman
+    url: collections/nscale.postman_collection.json
+  - type: Documentation
+    url: https://docs.nscale.com/docs/compute/overview
 common:
 - type: AgenticAccess
   url: agentic-access/nscale-agentic-access.yml
