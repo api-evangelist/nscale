@@ -1,0 +1,22 @@
+{
+  "provider": "nscale",
+  "sources": [
+    "nscale-chat-api-openapi.yml",
+    "nscale-completions-api-openapi.yml",
+    "nscale-embeddings-api-openapi.yml",
+    "nscale-images-api-openapi.yml",
+    "nscale-models-api-openapi.yml"
+  ],
+  "outputs": [
+    "nscale-chat-api-openapi.yml",
+    "nscale-completions-api-openapi.yml",
+    "nscale-embeddings-api-openapi.yml",
+    "nscale-images-api-openapi.yml",
+    "nscale-models-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
