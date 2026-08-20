@@ -22,6 +22,12 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/nscale.png
 tags:
+- Artificial Intelligence
+- GPU
+- Inference
+- Serverless
+- Cloud Compute
+tags_raw:
 - AI
 - GPU
 - Inference
@@ -97,6 +103,8 @@ apis:
   humanURL: https://docs.nscale.com/docs/inference/serverless-models/overview
   baseURL: https://inference.api.nscale.com/v1
   tags:
+  - Image
+  tags_raw:
   - Images
   properties:
   - type: OpenAPI
