@@ -7,6 +7,18 @@ description: Nscale is an AI/GPU cloud that pairs serverless, OpenAI-compatible 
   Qwen, DeepSeek, GPT OSS, Mistral, Flux) at https://inference.api.nscale.com/v1 with
   pay-per-token billing, while the platform API provisions GPU clusters, compute instances,
   networks, and storage.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: self-serve
