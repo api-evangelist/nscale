@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Nscale Serverless Inference Chat Images API
+  title: Nscale Serverless Inference Images API
   description: OpenAI-compatible serverless inference API for Nscale. Provides chat completions, text completions, embeddings, image generation, and model discovery against open models (Llama, Qwen, DeepSeek, GPT OSS, Mistral, Flux) served on Nscale GPU infrastructure. Authenticate with a Bearer API key issued from the Nscale console.
   termsOfService: https://www.nscale.com/legal/terms-of-service
   contact:
@@ -41,6 +41,19 @@ paths:
         '429':
           $ref: '#/components/responses/RateLimited'
 components:
+  responses:
+    RateLimited:
+      description: Too many requests; back off and retry.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     ImageGenerationRequest:
       type: object
@@ -69,18 +82,6 @@ components:
         num_inference_steps:
           type: integer
           description: Number of diffusion steps (affects per-megapixel cost).
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-            code:
-              type: string
     ImageGenerationResponse:
       type: object
       properties:
@@ -95,19 +96,18 @@ components:
                 type: string
               b64_json:
                 type: string
-  responses:
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    RateLimited:
-      description: Too many requests; back off and retry.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+            code:
+              type: string
   securitySchemes:
     bearerAuth:
       type: http

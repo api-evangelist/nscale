@@ -1,0 +1,27 @@
+# Front Door AI Index — nscale — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: nscale
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.nscale.com
+  final_host: www.nscale.com
+  ownership: own
+  owner: nscale
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 29
+  host_score: 29
+  density: 43.74
+  words: 663
+  tiers:
+    agentic: 2
+    core: 27
+    model: 0
+  ambiguous: 1
+  top_terms:
+    AI: 27
+    inference: 2
+    intelligence: 1
