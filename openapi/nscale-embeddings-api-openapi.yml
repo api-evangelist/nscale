@@ -41,19 +41,6 @@ paths:
         '429':
           $ref: '#/components/responses/RateLimited'
 components:
-  responses:
-    RateLimited:
-      description: Too many requests; back off and retry.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Usage:
       type: object
@@ -64,6 +51,40 @@ components:
           type: integer
         total_tokens:
           type: integer
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+            code:
+              type: string
+    EmbeddingRequest:
+      type: object
+      required:
+      - model
+      - input
+      properties:
+        model:
+          type: string
+          description: Embedding model identifier, e.g. Qwen/Qwen3-Embedding-8B.
+        input:
+          description: Text or array of text to embed.
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        encoding_format:
+          type: string
+          enum:
+          - float
+          - base64
+          default: float
     EmbeddingResponse:
       type: object
       properties:
@@ -89,40 +110,19 @@ components:
           type: string
         usage:
           $ref: '#/components/schemas/Usage'
-    EmbeddingRequest:
-      type: object
-      required:
-      - model
-      - input
-      properties:
-        model:
-          type: string
-          description: Embedding model identifier, e.g. Qwen/Qwen3-Embedding-8B.
-        input:
-          description: Text or array of text to embed.
-          oneOf:
-          - type: string
-          - type: array
-            items:
-              type: string
-        encoding_format:
-          type: string
-          enum:
-          - float
-          - base64
-          default: float
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-            code:
-              type: string
+  responses:
+    RateLimited:
+      description: Too many requests; back off and retry.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http
