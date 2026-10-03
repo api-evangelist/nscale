@@ -58,13 +58,6 @@ paths:
         '404':
           description: Model not found.
 components:
-  responses:
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Model:
       type: object
@@ -84,6 +77,16 @@ components:
           type: object
           description: Per-1M-token pricing metadata where exposed.
           additionalProperties: true
+    ModelList:
+      type: object
+      properties:
+        object:
+          type: string
+          example: list
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Model'
     Error:
       type: object
       properties:
@@ -96,16 +99,13 @@ components:
               type: string
             code:
               type: string
-    ModelList:
-      type: object
-      properties:
-        object:
-          type: string
-          example: list
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Model'
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

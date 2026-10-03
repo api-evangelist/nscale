@@ -51,6 +51,18 @@ components:
           type: integer
         total_tokens:
           type: integer
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+            code:
+              type: string
     CompletionRequest:
       type: object
       required:
@@ -82,18 +94,6 @@ components:
           - type: array
             items:
               type: string
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-            code:
-              type: string
     CompletionResponse:
       type: object
       properties:
@@ -120,14 +120,14 @@ components:
         usage:
           $ref: '#/components/schemas/Usage'
   responses:
-    Unauthorized:
-      description: Missing or invalid API key.
+    RateLimited:
+      description: Too many requests; back off and retry.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    RateLimited:
-      description: Too many requests; back off and retry.
+    Unauthorized:
+      description: Missing or invalid API key.
       content:
         application/json:
           schema:

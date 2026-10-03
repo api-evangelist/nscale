@@ -96,14 +96,14 @@ components:
           type: integer
           description: Number of diffusion steps (affects per-megapixel cost).
   responses:
-    Unauthorized:
-      description: Missing or invalid API key.
+    RateLimited:
+      description: Too many requests; back off and retry.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    RateLimited:
-      description: Too many requests; back off and retry.
+    Unauthorized:
+      description: Missing or invalid API key.
       content:
         application/json:
           schema:
