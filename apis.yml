@@ -52,26 +52,6 @@ created: '2026-06-21'
 modified: '2026-06-21'
 specificationVersion: '0.23'
 apis:
-- aid: nscale:nscale-chat-api
-  name: Nscale Chat API
-  description: OpenAI-compatible chat completions.
-  humanURL: https://docs.nscale.com/docs/inference/serverless-models/overview
-  baseURL: https://inference.api.nscale.com/v1
-  tags:
-  - Chat
-  properties:
-  - type: OpenAPI
-    url: openapi/nscale-chat-api-openapi.yml
-  - type: Documentation
-    url: https://docs.nscale.com/docs/inference/serverless-models/overview
-  - type: APIReference
-    url: https://docs.nscale.com/api-reference
-  - type: AsyncAPI
-    url: asyncapi/nscale-asyncapi.yml
-  - type: Postman
-    url: collections/nscale.postman_collection.json
-  - type: Documentation
-    url: https://docs.nscale.com/docs/compute/overview
 - aid: nscale:nscale-completions-api
   name: Nscale Completions API
   description: OpenAI-compatible legacy text completions.
@@ -144,6 +124,26 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/nscale-models-api-openapi.yml
+  - type: Documentation
+    url: https://docs.nscale.com/docs/inference/serverless-models/overview
+  - type: APIReference
+    url: https://docs.nscale.com/api-reference
+  - type: AsyncAPI
+    url: asyncapi/nscale-asyncapi.yml
+  - type: Postman
+    url: collections/nscale.postman_collection.json
+  - type: Documentation
+    url: https://docs.nscale.com/docs/compute/overview
+- aid: nscale:nscale-chat-completions-api
+  name: Nscale Chat Completions API
+  description: OpenAI-compatible chat completions.
+  humanURL: https://docs.nscale.com/docs/inference/serverless-models/overview
+  baseURL: https://inference.api.nscale.com/v1
+  tags:
+  - Chat Completions
+  properties:
+  - type: OpenAPI
+    url: openapi/nscale-chat-completions-api-openapi.yml
   - type: Documentation
     url: https://docs.nscale.com/docs/inference/serverless-models/overview
   - type: APIReference

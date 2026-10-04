@@ -13,14 +13,14 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: Chat
+- name: Chat Completions
   description: OpenAI-compatible chat completions.
 paths:
   /chat/completions:
     post:
       operationId: createChatCompletion
       tags:
-      - Chat
+      - Chat Completions
       summary: Create a chat completion
       description: Generates a chat completion response for the provided model and chat history. Supports streaming via Server-Sent Events when stream is true.
       requestBody:
@@ -45,7 +45,32 @@ paths:
         '429':
           $ref: '#/components/responses/RateLimited'
 components:
+  responses:
+    RateLimited:
+      description: Too many requests; back off and retry.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+            code:
+              type: string
     Usage:
       type: object
       properties:
@@ -113,40 +138,6 @@ components:
           oneOf:
           - type: string
           - type: object
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-            code:
-              type: string
-    ChatMessage:
-      type: object
-      required:
-      - role
-      - content
-      properties:
-        role:
-          type: string
-          enum:
-          - system
-          - user
-          - assistant
-          - tool
-        content:
-          description: Text content or an array of multimodal content parts.
-          oneOf:
-          - type: string
-          - type: array
-            items:
-              type: object
-        name:
-          type: string
     ChatCompletionResponse:
       type: object
       properties:
@@ -172,19 +163,28 @@ components:
                 type: string
         usage:
           $ref: '#/components/schemas/Usage'
-  responses:
-    RateLimited:
-      description: Too many requests; back off and retry.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    ChatMessage:
+      type: object
+      required:
+      - role
+      - content
+      properties:
+        role:
+          type: string
+          enum:
+          - system
+          - user
+          - assistant
+          - tool
+        content:
+          description: Text content or an array of multimodal content parts.
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: object
+        name:
+          type: string
   securitySchemes:
     bearerAuth:
       type: http

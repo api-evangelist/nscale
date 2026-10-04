@@ -59,24 +59,6 @@ paths:
           description: Model not found.
 components:
   schemas:
-    Model:
-      type: object
-      properties:
-        id:
-          type: string
-        object:
-          type: string
-          example: model
-        created:
-          type: integer
-        owned_by:
-          type: string
-        context_length:
-          type: integer
-        pricing:
-          type: object
-          description: Per-1M-token pricing metadata where exposed.
-          additionalProperties: true
     ModelList:
       type: object
       properties:
@@ -99,6 +81,24 @@ components:
               type: string
             code:
               type: string
+    Model:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          example: model
+        created:
+          type: integer
+        owned_by:
+          type: string
+        context_length:
+          type: integer
+        pricing:
+          type: object
+          description: Per-1M-token pricing metadata where exposed.
+          additionalProperties: true
   responses:
     Unauthorized:
       description: Missing or invalid API key.
