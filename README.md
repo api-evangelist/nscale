@@ -1,4 +1,4 @@
-# Nscale (nscale)
+# Nscale
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,159 +66,147 @@
 
 Nscale is an AI/GPU cloud that pairs serverless, OpenAI-compatible inference with on-demand GPU compute. The Serverless Inference API serves open models (Llama, Qwen, DeepSeek, GPT OSS, Mistral, Flux) at https://inference.api.nscale.com/v1 with pay-per-token billing, while the platform API provisions GPU clusters, compute instances, networks, and storage.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/nscale/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/nscale/refs/heads/main/apis.yml)
+**Areas:** Artificial Intelligence · GPU · Inference · Serverless · Cloud Compute · Real-Time
 
-## Tags
+## Nscale on APIs.io
 
-- AI
-- GPU
-- Inference
-- Serverless
-- Cloud Compute
+Everything profiled for Nscale is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/nscale/](https://apis.io/providers/nscale/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (5)
 
-- **Created:** 2026-06-21
-- **Modified:** 2026-06-21
+- [Nscale Completions API](https://apis.io/apis/nscale/nscale-completions-api/) — OpenAI-compatible legacy text completions.
+- [Nscale Embeddings API](https://apis.io/apis/nscale/nscale-embeddings-api/) — Vector embeddings of text input.
+- [Nscale Images API](https://apis.io/apis/nscale/nscale-images-api/) — Text-to-image generation.
+- [Nscale Models API](https://apis.io/apis/nscale/nscale-models-api/) — Model catalog discovery.
+- [Nscale Chat Completions API](https://apis.io/apis/nscale/nscale-chat-completions-api/) — OpenAI-compatible chat completions.
 
-## APIs
+### Published properties
 
-### Nscale Serverless Chat Completions API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-OpenAI-compatible chat completions across Llama, Qwen, DeepSeek, GPT OSS, and Mistral models, with streaming (SSE), tool use, and multimodal vision inputs, served from Nscale serverless inference.
+#### AsyncAPI (1)
 
-- **Human URL:** [https://docs.nscale.com/docs/inference/serverless-models/overview](https://docs.nscale.com/docs/inference/serverless-models/overview)
-- **Base URL:** `https://inference.api.nscale.com/v1`
+Event-driven and webhook contracts.
 
-#### Tags
+- [Nscale Chat Completions Streaming (HTTP + SSE)](https://apis.io/asyncapis/nscale/nscale-asyncapi/)
 
-- Chat
-- Completions
-- LLM
+#### Event channels (1)
 
-#### Properties
+Individual events and webhooks the provider emits.
 
-- [Documentation](https://docs.nscale.com/docs/inference/serverless-models/overview)
-- [API Reference](https://docs.nscale.com/api-reference)
-- [OpenAPI](openapi/nscale-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [AsyncAPI](asyncapi/nscale-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-- [Postman Collection](collections/nscale.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/nscale.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [/chat/completions](https://apis.io/channels/nscale/chat-completions/)
 
-### Nscale Serverless Completions API
+#### MCP servers (1)
 
-OpenAI-compatible legacy text completions endpoint that generates a continuation for a supplied prompt against a selected serverless model.
+Model Context Protocol servers that expose the API to agents.
 
-- **Human URL:** [https://docs.nscale.com/api-reference](https://docs.nscale.com/api-reference)
-- **Base URL:** `https://inference.api.nscale.com/v1`
+- [nscale](https://apis.io/servers/nscale/nscale/)
 
-#### Tags
+#### Agentic access (1)
 
-- Completions
-- Text Generation
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Properties
+- [Nscale Agentic Access](https://apis.io/agentic-access/nscale/nscale-agentic-access/)
 
-- [Documentation](https://docs.nscale.com/docs/inference/serverless-models/overview)
-- [API Reference](https://docs.nscale.com/api-reference)
-- [OpenAPI](openapi/nscale-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/nscale.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/nscale.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Collections (6)
 
-### Nscale Serverless Embeddings API
+Postman and Open Collection request collections.
 
-OpenAI-compatible embeddings endpoint returning vector representations of text for retrieval, clustering, and semantic search, served by models such as Qwen3 Embedding.
+- [Nscale Serverless Inference API](https://apis.io/collections/nscale/open-nscale/)
+- [Nscale Serverless Inference Chat API](https://apis.io/collections/nscale/open-nscale-chat-api/)
+- [Nscale Serverless Inference Chat Completions API](https://apis.io/collections/nscale/open-nscale-completions-api/)
+- [Nscale Serverless Inference Chat Embeddings API](https://apis.io/collections/nscale/open-nscale-embeddings-api/)
+- [Nscale Serverless Inference Chat Images API](https://apis.io/collections/nscale/open-nscale-images-api/)
+- [Nscale Serverless Inference Chat Models API](https://apis.io/collections/nscale/open-nscale-models-api/)
 
-- **Human URL:** [https://docs.nscale.com/api-reference](https://docs.nscale.com/api-reference)
-- **Base URL:** `https://inference.api.nscale.com/v1`
+#### Governance rules (1)
 
-#### Tags
+Spectral rulesets for the provider's contracts.
 
-- Embeddings
-- Vectors
-- Semantic Search
+- [Nscale — asyncapi rules](https://apis.io/rules/nscale/nscale-asyncapi-spectral-rules/)
 
-#### Properties
+#### Security (2)
 
-- [Documentation](https://docs.nscale.com/docs/inference/serverless-models/overview)
-- [API Reference](https://docs.nscale.com/api-reference)
-- [OpenAPI](openapi/nscale-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/nscale.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/nscale.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Authentication, trust centre, and vulnerability disclosure.
 
-### Nscale Serverless Image Generation API
+- [Nscale Authentication](https://apis.io/security/nscale/nscale-authentication/)
+- [Nscale Domain Security](https://apis.io/security/nscale/nscale-domain-security/)
 
-OpenAI-compatible text-to-image endpoint creating images from prompts using diffusion models such as Flux.1 [schnell], billed per megapixel.
+#### Plans and pricing (1)
 
-- **Human URL:** [https://docs.nscale.com/api-reference](https://docs.nscale.com/api-reference)
-- **Base URL:** `https://inference.api.nscale.com/v1`
+Published plans, tiers and prices.
 
-#### Tags
+- [Nscale Plans Pricing](https://apis.io/plans/nscale/nscale-plans-pricing/)
 
-- Image Generation
-- Text to Image
-- Diffusion
+#### Rate limits (1)
 
-#### Properties
+Published request limits.
 
-- [Documentation](https://docs.nscale.com/docs/inference/serverless-models/overview)
-- [API Reference](https://docs.nscale.com/api-reference)
-- [OpenAPI](openapi/nscale-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/nscale.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/nscale.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Nscale Rate Limits](https://apis.io/rate-limits/nscale/nscale-rate-limits/)
 
-### Nscale Models API
+#### FinOps (1)
 
-Lists serverless models available for inference with identifiers, context length, and per-token pricing metadata via the OpenAI-compatible models endpoint.
+What the API costs to run, by operation.
 
-- **Human URL:** [https://docs.nscale.com/api-reference](https://docs.nscale.com/api-reference)
-- **Base URL:** `https://inference.api.nscale.com/v1`
+- [Nscale Finops](https://apis.io/finops/nscale/nscale-finops/)
 
-#### Tags
+## Where to find this API
 
-- Models
-- Catalog
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-#### Properties
-
-- [Documentation](https://docs.nscale.com/docs/inference/serverless-models/overview)
-- [API Reference](https://docs.nscale.com/api-reference)
-- [OpenAPI](openapi/nscale-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/nscale.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/nscale.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Nscale GPU Compute and Clusters API
-
-Platform API for provisioning and managing GPU compute instances, networks, security groups, object storage, organizations, and projects on the Nscale AI cloud.
-
-- **Human URL:** [https://docs.nscale.com/api-reference](https://docs.nscale.com/api-reference)
-- **Base URL:** `https://api.nscale.com`
-
-#### Tags
-
-- GPU
-- Compute
-- Clusters
-- Infrastructure
-
-#### Properties
-
-- [Documentation](https://docs.nscale.com/docs/compute/overview)
-- [API Reference](https://docs.nscale.com/api-reference)
-- [OpenAPI](openapi/nscale-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/nscale.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/nscale.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [LinkedIn](https://www.linkedin.com/company/nscale)
 - [Website](https://www.nscale.com)
 - [Documentation](https://docs.nscale.com)
-- [Plans](plans/nscale-plans-pricing.yml)
-- [Rate Limits](rate-limits/nscale-rate-limits.yml)
-- [Fin Ops](finops/nscale-finops.yml)
+- [Blog](https://www.nscale.com/blog)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 28.9** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 68.3 |
+| Contract quality | 57.9 |
+| Contract governance | 11.4 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 25.0 |
+| Access clarity | 7.9 |
+
+**Agent readiness 21.1** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | platform (partial credit) |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 10.9** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/nscale/](https://apis.io/providers/nscale/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Nscale: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/nscale/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
